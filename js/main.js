@@ -10,7 +10,11 @@ function getRandomNumber (minNum, maxNum) {
   if (minNum < 0 || maxNum < minNum) {
     return NaN;
   }
-  return Math.round((maxNum - minNum) * Math.random() + minNum);
+  const lower = Math.ceil(Math.min(minNum, maxNum));
+  const upper = Math.floor(Math.max(minNum, maxNum));
+
+  const result = (upper - lower + 1) * Math.random + lower;
+  return result;
 }
 
 getRandomNumber(0, 5);
