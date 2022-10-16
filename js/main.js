@@ -1,5 +1,3 @@
-import {createPicturesDescription} from './data.js';
-
-const PICTURES_COUNT = 25;
+import {createPicturesDescription, PICTURES_COUNT} from './data.js';
 
 createPicturesDescription(PICTURES_COUNT);

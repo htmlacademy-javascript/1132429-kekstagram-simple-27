@@ -20,9 +20,7 @@ const PICTURES_DESCRIPTION = [
   'Хорошая фотография!',
   'Хорошего отдыха!'
 ];
-
 /*Создание массива объектов*/
-
 const createPicturesDescription = (count) => {
   const photosList = [];
 
@@ -40,4 +38,4 @@ const createPicturesDescription = (count) => {
 
 createPicturesDescription(PICTURES_COUNT);
 
-export {createPicturesDescription};
+export {createPicturesDescription, PICTURES_COUNT};
