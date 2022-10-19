@@ -1,6 +1,4 @@
-import {getRandomNumber, getRandomArrayElement} from './util.js';
-
-const PICTURES_COUNT = 25;
+import {getRandomNumber, getRandomArrayElement} from './mock/util.js';
 
 const LikesCount = {
   MIN: 15,
@@ -36,6 +34,4 @@ const createPicturesDescription = (count) => {
   return photosList;
 };
 
-createPicturesDescription(PICTURES_COUNT);
-
-export {createPicturesDescription, PICTURES_COUNT};
+export {createPicturesDescription};

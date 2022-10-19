@@ -6,27 +6,21 @@
 [2] - умножение разницы заданных параметров на рандомное число, [3] - прибавляет минимальное число, чтобы полученное число находилось в диапазоне заданных параметров;
 4. Вызывает функцию с заданными параметрами;
 */
-function getRandomNumber (minNum, maxNum) {
+const getRandomNumber = (minNum, maxNum) => {
   if (minNum < 0 || maxNum < minNum) {
     return NaN;
   }
   return Math.round((maxNum - minNum) * Math.random() + minNum);
-}
-
-getRandomNumber();
+};
 /*
 Функция для проверки максимальной длины строки:
 1. Объявляет функцию с двумя параметрами: сама строка и максимальное значение строки по символам;
 2. Возвращает булевое значение 'true' в случае если длина строки меньшь либо равна максимальной длине строки
 3. Вызывает функцию с заданными параметрами;
 */
-function checkStringLength (string, maxLength) {
-  return string.length <= maxLength;
-}
-
-checkStringLength('', 140);
+const checkStringLength = (string, maxLength) => string.length <= maxLength;
 /* Функция, которая возвращает случайный элемент массива */
 const getRandomArrayElement = (array) =>
   array[getRandomNumber(0, array.length - 1)];
 
-export {getRandomNumber, getRandomArrayElement};
+export {getRandomNumber, getRandomArrayElement, checkStringLength};
