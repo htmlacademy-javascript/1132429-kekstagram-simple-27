@@ -18,7 +18,11 @@ const PICTURES_DESCRIPTION = [
   'Хорошая фотография!',
   'Хорошего отдыха!'
 ];
-/*Создание массива объектов*/
+/**
+ * Создание массива объектов
+ * @param {number} count - количество изображений, которое необходимо создать
+ * @return {Array} - массив полученнных изображений
+ */
 const createPicturesDescription = (count) => {
   const photosList = [];
   for (let i = 0; i <= count; i++) {
