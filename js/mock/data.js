@@ -1,4 +1,4 @@
-import {getRandomNumber, getRandomArrayElement} from './mock/util.js';
+import {getRandomNumber, getRandomArrayElement} from './util.js';
 
 const LikesCount = {
   MIN: 15,
@@ -21,11 +21,10 @@ const PICTURES_DESCRIPTION = [
 /*Создание массива объектов*/
 const createPicturesDescription = (count) => {
   const photosList = [];
-
   for (let i = 0; i <= count; i++) {
     photosList[i] = {
       id: i,
-      url: `photos/${i}.jpg`,
+      url: `../../photos/${i}.jpg`,
       description: getRandomArrayElement(PICTURES_DESCRIPTION),
       likes: getRandomNumber(LikesCount.MIN, LikesCount.MAX),
       comments: getRandomNumber(CommentsCount.MIN, CommentsCount.MAX),
