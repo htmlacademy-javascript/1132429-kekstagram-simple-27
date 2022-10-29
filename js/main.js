@@ -1,5 +1,6 @@
 import {createPicturesDescription} from './mock/data.js';
+import {renderThumbnails} from './thumbnails.js';
 
 const PICTURES_COUNT = 25;
 
-createPicturesDescription(PICTURES_COUNT);
+renderThumbnails(createPicturesDescription(PICTURES_COUNT));

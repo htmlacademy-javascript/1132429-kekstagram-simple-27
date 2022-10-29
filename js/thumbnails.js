@@ -1,19 +1,23 @@
-import {createPicturesDescription} from './main.js';
+/**
+ * Создание миниатюр фотографий
+ * @param {Array} thumbnails - объект данных фотографий
+ */
+const renderThumbnails = (thumbnails) => {
+  const thumbnailFragment = document.createDocumentFragment();
+  const pictureContainer = document.querySelector('.pictures');
 
-const pictureContainer = document.querySelector('.pictures');
-const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
+  thumbnails.forEach(({url, likes, comments}) => {
+    const thumbnailElement = document.querySelector('#picture')
+      .content
+      .querySelector('.picture')
+      .cloneNode(true);
+    thumbnailElement.querySelector('.picture__img').src = url;
+    thumbnailElement.querySelector('.picture__comments').textContent = likes;
+    thumbnailElement.querySelector('.picture__likes').textContent = comments;
+    thumbnailFragment.appendChild(thumbnailElement);
+  });
 
-const similarPhoto = createPicturesDescription();
-const similarPictureFragment = document.createDocumentFragment();
+  pictureContainer.appendChild(thumbnailFragment);
+};
 
-similarPhoto.forEach(({url, likes, comments}) => {
-  const photoElement = pictureTemplate.cloneNode(true);
-  photoElement.querySelector('.picture__img').src = url;
-  photoElement.querySelector('.picture__comments').textContent = likes;
-  photoElement.querySelector('.picture__likes').textContent = comments;
-  similarPictureFragment.appendChild(photoElement);
-});
-
-similarPictureFragment.appendChild(pictureContainer);
-
-export {similarPictureFragment};
+export {renderThumbnails};
