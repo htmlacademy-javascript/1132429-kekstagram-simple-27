@@ -1,3 +1,6 @@
-import {createPicturesDescription, PICTURES_COUNT} from './data.js';
+import {createPicturesDescription} from './mock/data.js';
+import {renderThumbnails} from './thumbnails.js';
 
-createPicturesDescription(PICTURES_COUNT);
+const PICTURES_COUNT = 25;
+
+renderThumbnails(createPicturesDescription(PICTURES_COUNT));
