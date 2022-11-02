@@ -48,9 +48,9 @@ const addEventListenersToForm = () => {
     }
   });
 };
-  // const pristine = new Pristine(form, {
-  //   classTo: 'img-upload__text',
-  //   errorTextParent: 'img-upload__text',
-  // }); // не знаю как реализовать проверку валидации
+// const pristine = new Pristine(form, {
+//   classTo: 'img-upload__text',
+//   errorTextParent: 'img-upload__text',
+// });
 
 export {addEventListenersToForm};
