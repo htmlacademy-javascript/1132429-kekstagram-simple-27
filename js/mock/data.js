@@ -25,10 +25,10 @@ const PICTURES_DESCRIPTION = [
  */
 const createPicturesDescription = (count) => {
   const photosList = [];
-  for (let i = 0; i <= count; i++) {
+  for (let i = 1; i <= count; i++) {
     photosList[i] = {
       id: i,
-      url: `../../photos/${i}.jpg`,
+      url: `photos/${i}.jpg`,
       description: getRandomArrayElement(PICTURES_DESCRIPTION),
       likes: getRandomNumber(LikesCount.MIN, LikesCount.MAX),
       comments: getRandomNumber(CommentsCount.MIN, CommentsCount.MAX),
