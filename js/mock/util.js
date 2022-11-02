@@ -24,5 +24,17 @@ const checkStringLength = (string, maxLength) => string.length <= maxLength;
  */
 const getRandomArrayElement = (array) =>
   array[getRandomNumber(0, array.length - 1)];
+/**
+ * Фукнция проверки нажатой клавиши
+ * @param {*} evt
+ * @return {boolean} - возвращает булевое значение
+ */
+const isEscapeKey = (evt) => evt.key === 'Escape';
+/**
+ *
+ * @param {*} evt
+ * @return {boolean} - возвращает булевое значение
+ */
+const isEnterKey = (evt) => evt.key === 'Enter';
 
-export {getRandomNumber, getRandomArrayElement, checkStringLength};
+export {getRandomNumber, getRandomArrayElement, checkStringLength, isEscapeKey, isEnterKey};
