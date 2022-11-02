@@ -47,7 +47,7 @@ const addEventListenersToForm = () => {
       closeEditorForm();
     }
   });
-
+};
   // const pristine = new Pristine(form, {
   //   classTo: 'img-upload__text',
   //   errorTextParent: 'img-upload__text',
