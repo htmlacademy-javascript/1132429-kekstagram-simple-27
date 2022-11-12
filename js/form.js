@@ -135,7 +135,7 @@ const isCommentsLength = (comment) => comment.length >= CommentsLength.MIN && co
 const isDefault = () => choosenEffect === DEFAULT_EFFECT;
 
 const udpateSlider = () => {
-  sliderElement.classList.remove('hidden');
+  sliderElement.classList.remove('visually-hidden');
   sliderElement.noUiSlider.updateOptions({
     range: {
       min: choosenEffect.min,
@@ -145,7 +145,7 @@ const udpateSlider = () => {
     step: choosenEffect.step,
   });
   if (isDefault()) {
-    sliderElement.classList.add('hidden');
+    sliderElement.classList.add('visually-hidden');
   }
 };
 
