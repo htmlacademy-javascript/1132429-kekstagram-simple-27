@@ -1,3 +1,4 @@
+import {sendData} from './network.js';
 import {isEnterKey, isEscapeKey} from './util.js';
 
 const form = document.querySelector('.img-upload__form');
@@ -10,6 +11,7 @@ const scaleInputValue = form.querySelector('.scale__control--value');
 const photo = form.querySelector('.img-upload__preview img');
 const sliderElement = document.querySelector('.effect-level__slider');
 const effectLevel = document.querySelector('.effect-level__value');
+const submitButton = form.querySelector('#upload-submit');
 
 const CommentsLength = {
   MIN: 20,
@@ -185,7 +187,15 @@ noUiSlider.create(sliderElement, {
 });
 udpateSlider();
 
-const addEventListenersToForm = () => {
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+};
+
+const addEventListenersToForm = (onSuccess, onFail) => {
   formOpenElement.addEventListener('change', () => {
     openEditorForm();
     scalePhoto();
@@ -223,17 +233,21 @@ const addEventListenersToForm = () => {
     errorTextParent: 'img-upload__text',
   });
 
-  form.addEventListener('submit', (evt) => {
-    if (!pristine.validate()) {
-      evt.preventDefault();
-    }
-  });
-
   pristine.addValidator(
     form.querySelector('.text__description'),
     isCommentsLength,
     `Необходимое количество символов от ${CommentsLength.MIN} до ${CommentsLength.MAX}`
   );
+
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    if (pristine.validate()) {
+      blockSubmitButton();
+      sendData(onSuccess, onFail, new FormData(evt.target))
+        .then(() => closeEditorForm())
+        .then(() => unblockSubmitButton());
+    }
+  });
 };
 
 export {addEventListenersToForm};
