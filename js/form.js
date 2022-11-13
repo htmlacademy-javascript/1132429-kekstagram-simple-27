@@ -7,8 +7,7 @@ const editorForm = form.querySelector('.img-upload__overlay');
 const decreaseButton = form.querySelector('.scale__control--smaller');
 const increaseButton = form.querySelector('.scale__control--bigger');
 const scaleInputValue = form.querySelector('.scale__control--value');
-const photoContainer = form.querySelector('.img-upload__preview');
-const image = document.querySelector('.img-upload__preview img');
+const photo = form.querySelector('.img-upload__preview img');
 const sliderElement = document.querySelector('.effect-level__slider');
 const effectLevel = document.querySelector('.effect-level__value');
 
@@ -100,7 +99,7 @@ function closeEditorForm() {
 
 const scalePhoto = (value = ScaleValue.DEFAULT_SCALE) => {
   scaleInputValue.value = `${value}%`;
-  photoContainer.style.transform = `scale(${value / 100})`;
+  photo.style.transform = `scale(${value / 100})`;
 };
 
 const decreaseButtonClickHandler = () => {
@@ -135,7 +134,7 @@ const isCommentsLength = (comment) => comment.length >= CommentsLength.MIN && co
 const isDefault = () => choosenEffect === DEFAULT_EFFECT;
 
 const udpateSlider = () => {
-  sliderElement.classList.remove('visually-hidden');
+  sliderElement.classList.remove('hidden');
   sliderElement.noUiSlider.updateOptions({
     range: {
       min: choosenEffect.min,
@@ -145,7 +144,7 @@ const udpateSlider = () => {
     step: choosenEffect.step,
   });
   if (isDefault()) {
-    sliderElement.classList.add('visually-hidden');
+    sliderElement.classList.add('hidden');
   }
 };
 
@@ -158,15 +157,15 @@ const formChangeHandler = (evt) => {
 };
 
 const sliderUpdateHandler = () => {
-  image.style.filter = '';
-  image.className = '';
+  photo.style.filter = '';
+  photo.className = '';
   effectLevel.value = '';
   if (isDefault()) {
     return;
   }
   const sliderValue = sliderElement.noUiSlider.get();
-  image.style.filter = `${choosenEffect.class}(${sliderValue}${choosenEffect.unit})`;
-  image.classList.add(`effects__preview--${choosenEffect.name}`);
+  photo.style.filter = `${choosenEffect.class}(${sliderValue}${choosenEffect.unit})`;
+  photo.classList.add(`effects__preview--${choosenEffect.name}`);
   effectLevel.value = sliderValue;
 };
 
@@ -187,7 +186,7 @@ noUiSlider.create(sliderElement, {
 udpateSlider();
 
 const addEventListenersToForm = () => {
-  formOpenElement.addEventListener('click', () => {
+  formOpenElement.addEventListener('change', () => {
     openEditorForm();
     scalePhoto();
   });
