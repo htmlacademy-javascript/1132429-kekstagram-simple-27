@@ -187,14 +187,6 @@ noUiSlider.create(sliderElement, {
 });
 udpateSlider();
 
-const blockSubmitButton = () => {
-  submitButton.disabled = true;
-};
-
-const unblockSubmitButton = () => {
-  submitButton.disabled = false;
-};
-
 const addEventListenersToForm = (onSuccess, onFail) => {
   formOpenElement.addEventListener('change', () => {
     openEditorForm();
@@ -227,6 +219,14 @@ const addEventListenersToForm = (onSuccess, onFail) => {
 
   form.addEventListener('change', formChangeHandler);
   sliderElement.noUiSlider.on('update', sliderUpdateHandler);
+
+  function blockSubmitButton() {
+    submitButton.disabled = true;
+  }
+
+  function unblockSubmitButton() {
+    submitButton.disabled = false;
+  }
 
   const pristine = new Pristine(form, {
     classTo: 'img-upload__text',
