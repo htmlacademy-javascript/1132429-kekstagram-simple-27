@@ -185,6 +185,10 @@ const openEditorForm = () => {
   document.body.classList.add('modal-open');
 
   document.addEventListener('keydown', onFormEscKeydown);
+  resetScale();
+  resetEffects();
+  form.querySelector('.text__description').value = '';
+  form.querySelector('#effect-none').checked = true;
 };
 
 function closeEditorForm() {
@@ -198,13 +202,13 @@ function closeEditorForm() {
 const addEventListenersToForm = (onSuccess, onFail) => {
   formOpenElement.addEventListener('change', () => {
     openEditorForm();
-    scalePhoto();
+    resetScale();
   });
 
   formOpenElement.addEventListener('keydown', (evt) => {
     if (isEnterKey(evt)) {
       openEditorForm();
-      scalePhoto();
+      resetScale();
     }
   });
 
