@@ -84,21 +84,6 @@ const onFormEscKeydown = (evt) => {
   }
 };
 
-const openEditorForm = () => {
-  editorForm.classList.remove('hidden');
-  document.body.classList.add('modal-open');
-
-  document.addEventListener('keydown', onFormEscKeydown);
-};
-
-function closeEditorForm() {
-  editorForm.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-
-  document.removeEventListener('keydown', onFormEscKeydown);
-  formOpenElement.value = '';
-}
-
 const scalePhoto = (value = ScaleValue.DEFAULT_SCALE) => {
   scaleInputValue.value = `${value}%`;
   photo.style.transform = `scale(${value / 100})`;
@@ -195,16 +180,35 @@ const unblockSubmitButton = () => {
   submitButton.disabled = false;
 };
 
+const openEditorForm = () => {
+  editorForm.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+
+  document.addEventListener('keydown', onFormEscKeydown);
+  resetScale();
+  resetEffects();
+  form.querySelector('.text__description').value = '';
+  form.querySelector('#effect-none').checked = true;
+};
+
+function closeEditorForm() {
+  editorForm.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+
+  document.removeEventListener('keydown', onFormEscKeydown);
+  formOpenElement.value = '';
+}
+
 const addEventListenersToForm = (onSuccess, onFail) => {
   formOpenElement.addEventListener('change', () => {
     openEditorForm();
-    scalePhoto();
+    resetScale();
   });
 
   formOpenElement.addEventListener('keydown', (evt) => {
     if (isEnterKey(evt)) {
       openEditorForm();
-      scalePhoto();
+      resetScale();
     }
   });
 

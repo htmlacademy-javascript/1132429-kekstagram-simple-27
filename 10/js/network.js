@@ -1,3 +1,4 @@
+/* eslint-disable arrow-body-style */
 /**
  * Функция для получения данных с сервера методом GET
  * @param {Function} onSuccess - коллбэк функция, которая вызывается при успешном ответе с сервера
@@ -5,7 +6,7 @@
  * @return {Promise} - возвращает промис
  */
 const getData = (onSuccess, onFail) => {
-  fetch('https://27.javascript.pages.academy/kekstagram-simple/data')
+  return fetch('https://27.javascript.pages.academy/kekstagram-simple/data')
     .then((response) => response.json())
     .then((data) => onSuccess(data))
     .catch(() => onFail());
@@ -17,7 +18,7 @@ const getData = (onSuccess, onFail) => {
  * @return {Promise} - возвращает промис
  */
 const sendData = (onSuccess, onFail, data) => {
-  fetch('https://27.javascript.pages.academy/kekstagram-simple', {
+  return fetch('https://27.javascript.pages.academy/kekstagram-simple', {
     method: 'POST',
     body: data,
   })
