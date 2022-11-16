@@ -1,3 +1,4 @@
+import {sendData} from './network.js';
 import {isEnterKey, isEscapeKey} from './util.js';
 
 const form = document.querySelector('.img-upload__form');
@@ -7,10 +8,10 @@ const editorForm = form.querySelector('.img-upload__overlay');
 const decreaseButton = form.querySelector('.scale__control--smaller');
 const increaseButton = form.querySelector('.scale__control--bigger');
 const scaleInputValue = form.querySelector('.scale__control--value');
-const photoContainer = form.querySelector('.img-upload__preview');
-const image = document.querySelector('.img-upload__preview img');
+const photo = form.querySelector('.img-upload__preview img');
 const sliderElement = document.querySelector('.effect-level__slider');
 const effectLevel = document.querySelector('.effect-level__value');
+const submitButton = form.querySelector('#upload-submit');
 
 const CommentsLength = {
   MIN: 20,
@@ -83,24 +84,9 @@ const onFormEscKeydown = (evt) => {
   }
 };
 
-const openEditorForm = () => {
-  editorForm.classList.remove('hidden');
-  document.body.classList.add('modal-open');
-
-  document.addEventListener('keydown', onFormEscKeydown);
-};
-
-function closeEditorForm() {
-  editorForm.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-
-  document.removeEventListener('keydown', onFormEscKeydown);
-  formOpenElement.value = '';
-}
-
 const scalePhoto = (value = ScaleValue.DEFAULT_SCALE) => {
   scaleInputValue.value = `${value}%`;
-  photoContainer.style.transform = `scale(${value / 100})`;
+  photo.style.transform = `scale(${value / 100})`;
 };
 
 const decreaseButtonClickHandler = () => {
@@ -135,7 +121,7 @@ const isCommentsLength = (comment) => comment.length >= CommentsLength.MIN && co
 const isDefault = () => choosenEffect === DEFAULT_EFFECT;
 
 const udpateSlider = () => {
-  sliderElement.classList.remove('visually-hidden');
+  sliderElement.classList.remove('hidden');
   sliderElement.noUiSlider.updateOptions({
     range: {
       min: choosenEffect.min,
@@ -145,7 +131,7 @@ const udpateSlider = () => {
     step: choosenEffect.step,
   });
   if (isDefault()) {
-    sliderElement.classList.add('visually-hidden');
+    sliderElement.classList.add('hidden');
   }
 };
 
@@ -158,15 +144,15 @@ const formChangeHandler = (evt) => {
 };
 
 const sliderUpdateHandler = () => {
-  image.style.filter = '';
-  image.className = '';
+  photo.style.filter = '';
+  photo.className = '';
   effectLevel.value = '';
   if (isDefault()) {
     return;
   }
   const sliderValue = sliderElement.noUiSlider.get();
-  image.style.filter = `${choosenEffect.class}(${sliderValue}${choosenEffect.unit})`;
-  image.classList.add(`effects__preview--${choosenEffect.name}`);
+  photo.style.filter = `${choosenEffect.class}(${sliderValue}${choosenEffect.unit})`;
+  photo.classList.add(`effects__preview--${choosenEffect.name}`);
   effectLevel.value = sliderValue;
 };
 
@@ -186,16 +172,43 @@ noUiSlider.create(sliderElement, {
 });
 udpateSlider();
 
-const addEventListenersToForm = () => {
-  formOpenElement.addEventListener('click', () => {
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+};
+
+const openEditorForm = () => {
+  editorForm.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+
+  document.addEventListener('keydown', onFormEscKeydown);
+  resetScale();
+  resetEffects();
+  form.querySelector('.text__description').value = '';
+  form.querySelector('#effect-none').checked = true;
+};
+
+function closeEditorForm() {
+  editorForm.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+
+  document.removeEventListener('keydown', onFormEscKeydown);
+  formOpenElement.value = '';
+}
+
+const addEventListenersToForm = (onSuccess, onFail) => {
+  formOpenElement.addEventListener('change', () => {
     openEditorForm();
-    scalePhoto();
+    resetScale();
   });
 
   formOpenElement.addEventListener('keydown', (evt) => {
     if (isEnterKey(evt)) {
       openEditorForm();
-      scalePhoto();
+      resetScale();
     }
   });
 
@@ -224,17 +237,21 @@ const addEventListenersToForm = () => {
     errorTextParent: 'img-upload__text',
   });
 
-  form.addEventListener('submit', (evt) => {
-    if (!pristine.validate()) {
-      evt.preventDefault();
-    }
-  });
-
   pristine.addValidator(
     form.querySelector('.text__description'),
     isCommentsLength,
     `Необходимое количество символов от ${CommentsLength.MIN} до ${CommentsLength.MAX}`
   );
+
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    if (pristine.validate()) {
+      blockSubmitButton();
+      sendData(onSuccess, onFail, new FormData(evt.target))
+        .then(() => closeEditorForm())
+        .then(() => unblockSubmitButton());
+    }
+  });
 };
 
 export {addEventListenersToForm};

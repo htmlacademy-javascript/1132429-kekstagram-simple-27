@@ -1,9 +1,6 @@
-import {createPicturesDescription} from './mock/data.js';
+import {getData} from './network.js';
 import {renderThumbnails} from './thumbnails.js';
 import {addEventListenersToForm} from './form.js';
-// import './effects.js';
+import {showAlert, successSubmitHandler, errorSubmitHandler} from './util.js';
 
-const PICTURES_COUNT = 25;
-
-renderThumbnails(createPicturesDescription(PICTURES_COUNT));
-addEventListenersToForm();
+getData(renderThumbnails, showAlert).then(() => addEventListenersToForm(successSubmitHandler, errorSubmitHandler));
