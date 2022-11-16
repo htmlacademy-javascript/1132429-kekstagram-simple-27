@@ -41,13 +41,13 @@ const showAlert = () => {
   }, ALERT_SHOW_TIME);
 };
 
-function successSubmitHandler() {
-  const successPopup = document.querySelector('#success');
-  const closeSuccessButton = successPopup.querySelector('.success__button');
-  successPopup.content
+const successSubmitHandler = () => {
+  const successPopup = document.querySelector('#success')
+    .content
     .querySelector('.success')
     .cloneNode(true);
   document.body.appendChild(successPopup);
+  const closeSuccessButton = document.querySelector('.success__button');
 
   closeSuccessButton.addEventListener('click', () => {
     successPopup.remove();
@@ -64,15 +64,15 @@ function successSubmitHandler() {
       successPopup.remove();
     }
   }, {once: true});
-}
+};
 
-function errorSubmitHandler() {
-  const errorPopup = document.querySelector('#error');
-  const closeErrorButton = errorPopup.querySelector('.error__button');
-  errorPopup.content
+const errorSubmitHandler = () => {
+  const errorPopup = document.querySelector('#error')
+    .content
     .querySelector('.error')
     .cloneNode(true);
   document.body.appendChild(errorPopup);
+  const closeErrorButton = errorPopup.querySelector('.error__button');
 
   closeErrorButton.addEventListener('click', () => {
     errorPopup.remove();
@@ -89,6 +89,6 @@ function errorSubmitHandler() {
       errorPopup.remove();
     }
   }, {once: true});
-}
+};
 
 export {isEscapeKey, isEnterKey, showAlert, successSubmitHandler, errorSubmitHandler};
